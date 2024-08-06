@@ -1,6 +1,7 @@
 package com.ecommerce.sportscenter.service;
 
 import com.ecommerce.sportscenter.entity.Product;
+import com.ecommerce.sportscenter.exceptions.ProductNotFoundException;
 import com.ecommerce.sportscenter.model.ProductResponse;
 import com.ecommerce.sportscenter.repository.ProductRepository;
 import lombok.extern.log4j.Log4j2;
@@ -8,9 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -25,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProductById(Integer productId) {
         log.info("Fetching Product by Id: {}", productId);
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product doesn't exist"));
+                .orElseThrow(() -> new ProductNotFoundException("Product doesn't exist"));
         ProductResponse productResponse = convertToProductResponse(product);
         log.info("Fetched Product by Product Id: {}", productId);
         return productResponse;

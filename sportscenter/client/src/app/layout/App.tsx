@@ -1,28 +1,32 @@
-import {useEffect, useState} from "react";
-import {Product} from "../models/product.ts";
+import {Container, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import Header from "./Header.tsx";
+import {useState} from "react";
+import {Outlet} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [darkMode, setDarkMode] = useState(false);
+    const paletteType = darkMode ? 'dark' : 'light';
+    const theme = createTheme({
+        palette: {
+            mode: paletteType
+        }
+    })
 
-    useEffect(() => {
-        fetch("http://localhost:8080/api/products")
-        .then(res => res.json())
-            .then(data => setProducts(data.content));
-    }, []);
+    function handleThemeChange(){
+        setDarkMode(!darkMode);
+    }
 
     return (
-        <div>
-            <h1>Sports Center</h1>
-            {products.map((product) => (
-                <div key={product.id}>
-                    <p>Name: {product.name}</p>
-                    <p>Description: {product.description}</p>
-                    <p>Price: ${product.price}</p>
-                    <p>Brand: {product.productBrand}</p>
-                    <p>Type: {product.productType}</p>
-                </div>
-            ))}
-        </div>
+        <ThemeProvider theme={theme}>
+            <ToastContainer position="bottom-right" hideProgressBar theme="colored"/>
+            <CssBaseline/>
+            <Header darkMode={darkMode} handleThemeChange={handleThemeChange}/>
+            <Container sx={{ paddingTop: "64px" }}>
+                <Outlet/>
+            </Container>
+        </ThemeProvider>
     )
 }
 
