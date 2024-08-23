@@ -6,7 +6,7 @@ import ContactPage from "../../features/contact/ContactPage";
 import ProductDetails from "../../features/catalog/ProductDetails.tsx";
 import NotFound from "../errors/NotFoundError";
 import ServerError from "../errors/ServerError";
-// import BasketPage from "../../features/basket/BasketPage";
+import BasketPage from "../../features/basket/BasketPage";
 // import SignInPage from "../../features/account/SignInPage";
 // import RegisterPage from "../../features/account/RegisterPage";
 // import RequireAuth from "./RequireAuth";
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
             {path: 'store', element: <Catalog/>},
             {path:'store/:id', element:<ProductDetails/>},
             {path: 'contact', element: <ContactPage/>},
-            // {path:'basket', element:<BasketPage/>},
+            {path:'basket', element:<BasketPage/>},
             // {path:'login', element:<SignInPage/>},
             // {path:'register', element:<RegisterPage/>},
             {path:'not-found', element:<NotFound/>},
